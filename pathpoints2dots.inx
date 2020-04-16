@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>Pathpoints2Dots</name>
+  <id>pathpoints2dots</id>
+  <dependency type="executable" location="extensions">pathpoints2dots.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <_label xml:space="preserve">
+This extension places an arbitrary object at the points
+of a path.
+
+Select two Objects:
+
+1. an object representing the path
+2. an object representing the dot
+
+The extension uses the SVG &lt;use&gt;-element which are
+linked to the second object. Changes of the shape of the
+source object changes the linked objects.
+  </_label>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render" />
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">pathpoints2dots.py</command>
+  </script>
+</inkscape-extension>
