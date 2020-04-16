@@ -1,0 +1,1 @@
+# Inkscape-Extension-pathpoints2dots
