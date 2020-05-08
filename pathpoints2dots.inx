@@ -4,7 +4,13 @@
   <id>pathpoints2dots</id>
   <dependency type="executable" location="extensions">pathpoints2dots.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
-  <_label xml:space="preserve">
+  <param name="tab" type="notebook">
+    <page name="points" _gui-text="Select Points">
+      <param type="bool" name="endpoints"     _gui-text="Endpoints">true</param>
+      <param type="bool" name="controlpoints" _gui-text="Controlpoints">false</param>
+    </page>
+    <page name="usage" _gui-text="Usage">
+      <_label xml:space="preserve">
 This extension places an arbitrary object at the points
 of a path.
 
@@ -16,7 +22,9 @@ Select two Objects:
 The extension uses the SVG &lt;use&gt;-element which are
 linked to the second object. Changes of the shape of the
 source object changes the linked objects.
-  </_label>
+      </_label>
+    </page>
+  </param>
   <effect>
     <object-type>all</object-type>
     <effects-menu>
