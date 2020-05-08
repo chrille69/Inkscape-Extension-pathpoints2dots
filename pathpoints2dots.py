@@ -22,11 +22,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 '''
 
-from inkex import Effect, PathElement, Group, errormsg, Use
+from inkex import Effect, PathElement, Group, errormsg, Use, Boolean as Bool
 
 class Pathpoints2Dots(Effect):
   def __init__(self):
     Effect.__init__(self)
+    self.arg_parser.add_argument("--tab")
+    self.arg_parser.add_argument("--endpoints"    , dest="endpoints"    , action="store", type=Bool, default="true")
+    self.arg_parser.add_argument("--controlpoints", dest="controlpoints", action="store", type=Bool, default="false")
 
   def effect(self):
     if len(self.svg.selected) != 2:
@@ -40,12 +43,31 @@ class Pathpoints2Dots(Effect):
     parent = path.find('..')
     group = Group()
     parent.add(group)
-    for point in path.path.end_points:
+    
+    end_points = list(path.path.end_points)
+    control_points = []
+    for cp in path.path.control_points:
+      is_endpoint = False
+      for ep in end_points:
+        if cp.x == ep.x and cp.y == ep.y:
+          is_endpoint = True
+          break
+      if not is_endpoint:
+        control_points.append(cp)
+    
+    pointlist = []
+    if self.options.endpoints:
+      pointlist += end_points
+    if self.options.controlpoints:
+      pointlist += control_points
+    
+    for point in pointlist:
       clone = Use()
       clone.set('xlink:href','#'+iddot)
       clone.set('x',point.x-bb.center.x)
       clone.set('y',point.y-bb.center.y)
       group.add(clone)
+    
 
 if __name__ == '__main__':
   e = Pathpoints2Dots()
